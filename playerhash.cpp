@@ -204,21 +204,13 @@ std::ostream& operator <<(std::ostream& os, const playerList& list) {
 
 unsigned int playerHash::getHash(const char* name) {
     int strSize = strlen(name);
-    int sum = 0;
-    int *hashInput = new int[strSize + 1];
+    unsigned int sum = 0;
 
-    if(hashInput) {
-        getInts(hashInput, name);
-
-        for(int i = 0; i < strSize; i++) {
-            sum *= 32;
-            sum += (hashInput[i]);
-            sum %= _tableSize;
-        }
-        delete [] hashInput;
+    for(int i = 0; i < strSize; i++) {
+        sum = (sum * 32 + int(name[i]));
     }
 
-    return sum;
+    return sum % _tableSize;
 }
 
 playerHash::playerHash(unsigned int tableSize) {
@@ -336,23 +328,4 @@ std::ostream& operator <<(std::ostream& os, const playerHash& hash) {
     }
 
     return os;
-}
-
-void getInts(int* intArray, const char* str) {
-    for(int i = 0; str[i]; i++) {
-        if(!isalpha(str[i])) { // All non-alpha characters treated as 0 in hash.
-            intArray[i] = 0;
-        }
-        else if(int(str[i]) < 91) { // If uppercase,
-            intArray[i] = int(str[i]) - 65;
-        }
-
-        else {
-            intArray[i] = int(str[i]) - 97;
-        }
-
-        intArray[i] = int(str[i]);
-    }
-
-    return;
 }

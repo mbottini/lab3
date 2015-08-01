@@ -6,7 +6,8 @@
 #include "PlayerDB.h"
 
 void PlayerDB::PrintDiagnostics() {
-    _os << "====================\n\n";
+    _os << "====================\n";
+    _os << "Hash Table Diagnostics\n\n";
     _os << "Table Size: " << _hash.getTableSize() << "\n";
     _os << "Number of Entries: " << _hash.getEntries() << "\n";
     _os << _hash;
